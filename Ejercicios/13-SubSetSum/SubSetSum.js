@@ -4,7 +4,7 @@ function subsetSum (nums, n) {
   if (nums.includes(n)) return true
   const sorted = nums.sort((a, b) => a - b);
   for (let i = 0; i < sorted.length; i++) {
-    sumaDeValores = sumaDeValores + sorted[i];
+    sumaDeValores += sorted[i];
     if (sumaDeValores === n ) return true
     
   }
