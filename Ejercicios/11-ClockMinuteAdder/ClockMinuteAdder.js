@@ -4,39 +4,35 @@ function clockMinuteAdder (time, minutesToAdd) {
   let timeExpected = '';
   let hours = 0; 
   let minutes = 0; 
-  
-  //Se obtiene la cantidad de horas o minutos a sumar
-  if (minutesToAdd >= 60) {
-    hours = parseInt(minutesToAdd / 60)
-    minutes = minutesToAdd % 60
-  }
-  //Suma la hora la(s) hora(s) y minuto(s) a time
-  if (hours === 0 && minutes === 0) {  //Si ambos son 0 entonces sólo suma los minutos enviados
-   
-      minutes = parseInt(time.substring(3,5),10) + minutesToAdd ;
-      timeExpected = time.substring(0,2) +":" + minutes.toString();
-      return timeExpected
-      
+  //Se obtienen las horas y los minutos
+
+  minutes = parseInt(time.substring(3,5),10);   //Obtiene los minutos
+  hours = parseInt(time.substring(0,2),10);    //Obtiene la hora
+ 
+  if ((minutes + minutesToAdd) >= 60){
+    hours = hours + parseInt((minutes + minutesToAdd) / 60);
+    minutes = (minutesToAdd % 60) === minutes ? 0 : (minutesToAdd % 60) + minutes ;    //A minutesToAdd se restan 60, porque rebasan la hora y se suman los que trae la hora
+    
   } else {
-    hours = parseInt(time.substring(0,2),10) + hours 
-    minutes = parseInt(time.substring(3,5),10) + minutes.toString();
-
+    minutes = minutes + minutesToAdd;
   }
+ 
+    //Determina si son más de 12 horas y si minutos menor a 10
+    hours = hours > 12 ? hours = hours - 12: hours;
+         
+    return timeExpected = (hours < 10) ? minutes < 10 ? "0" + hours.toString()+":"+"0"+minutes.toString():
+    "0" + hours.toString()+":"+minutes.toString(): hours.toString()+":"+minutes.toString();
   
-  //Determina si son más de 12 horas
-  if (hours > 12) {
-    hours = hours - 12;
-    timeExpected = "0"+ hours.toString() 
-  }
-    //return timeExpected = time[0] === '0' ? time.substring(1, 5) : time   // Se obtiene la hora sin el 0 inicial
-    return timeExpected
-  
-
 
 }
 
 module.exports = clockMinuteAdder
 
 //console.log(clockMinuteAdder("",0));
-const a = clockMinuteAdder('01:30', 30);
+let a =clockMinuteAdder ('12:05', 200); ouput: '09:20'
 console.log(a);
+clockMinuteAdder ('09:00', 20); ouput: '09:20'
+
+clockMinuteAdder ('01:30', 30); ouput: '02:00'
+
+clockMinuteAdder ('12:05', 100); ouput: '01:45'
