@@ -32,6 +32,6 @@ module.exports = SolveGraph
     s: ['a', 'c'],
     r: ['d'],
     z: ['z']
-  }, 'a', 'd')
+  }, 'a', 'z')
 
   console.log(a)
